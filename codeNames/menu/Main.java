@@ -18,7 +18,6 @@ public class Main {
     public static final Path commaSeparated = Paths.get("wordSets/commaSeparated");
     public static final Path lineSeparated = Paths.get("wordSets/lineSeparated");
     public static final ArrayList<String> ALL = new ArrayList<String>();
-    public static boolean useOld;
     public static int startTime;
     public static int turnTime;
     private static Menu menu;
