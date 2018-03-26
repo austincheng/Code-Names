@@ -7,21 +7,23 @@ import java.util.ArrayList;
 
 import static codeNames.menu.Main.*;
 
+/**
+ * ActionListener for action upon saving options in options menu.
+ * @author Austin Cheng
+ */
 public class SaveOptions implements ActionListener {
     private JDialog options;
     private ArrayList<JCheckBox> commaChecks;
     private ArrayList<JCheckBox> lineChecks;
-    private ButtonGroup version;
     private JCheckBox useTimer;
     private JTextField startField;
     private JTextField nextField;
 
     public SaveOptions(JDialog options, ArrayList<JCheckBox> comma, ArrayList<JCheckBox> line,
-                       ButtonGroup version, JCheckBox useTimer, JTextField start, JTextField next) {
+                       JCheckBox useTimer, JTextField start, JTextField next) {
         this.options = options;
         commaChecks = comma;
         lineChecks = line;
-        this.version = version;
         this.useTimer = useTimer;
         startField = start;
         nextField = next;
@@ -48,13 +50,6 @@ public class SaveOptions implements ActionListener {
                     "Insufficient Words",
                     JOptionPane.ERROR_MESSAGE);
             return;
-        }
-
-        ButtonModel selectedVersion = version.getSelection();
-        if (selectedVersion.getActionCommand().equals("Old")) {
-            useOld = true;
-        } else {
-            useOld = false;
         }
 
         if (useTimer.isSelected()) {

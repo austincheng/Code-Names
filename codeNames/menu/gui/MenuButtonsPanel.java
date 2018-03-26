@@ -7,6 +7,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * JPanel within the Menu JFrame that shows the menu buttons.
+ * @author Austin Cheng
+ */
 public class MenuButtonsPanel extends JPanel {
     private static final int FONT_SIZE = 25;
     private static OptionsPanel optionsPanel;

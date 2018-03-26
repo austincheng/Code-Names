@@ -3,6 +3,10 @@ package codeNames.menu.gui;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * JFrame representing the initial menu screen.
+ * @author Austin Cheng
+ */
 public class Menu extends JFrame {
     public static final int SIDE = 800;
 

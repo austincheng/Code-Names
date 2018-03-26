@@ -1,7 +1,8 @@
 package codeNames.commandLine;
 
+import codeNames.Board;
+import codeNames.Piece;
 import codeNames.commandLine.gui.*;
-import codeNames.commandLine.guiUCB.*;
 
 import java.io.*;
 import java.nio.file.Path;
@@ -9,17 +10,20 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * Runnable class to play game that takes command line arguments as parameters.
+ * @author Austin Cheng
+ */
 public class Main {
     public static final Path commaSeparated = Paths.get("wordSets/commaSeparated");
     public static final Path lineSeparated = Paths.get("wordSets/lineSeparated");
     public static final ArrayList<String> ALL = new ArrayList<String>();
-    public static boolean useOld;
     public static int startTime;
     public static int turnTime;
 
+    /** Runs the game. */
     public static void main(String[] args) {
         ArrayList<ArrayList<String>> commands = splitCommands(args);
-        useOld = false;
         startTime = -1;
         turnTime = -1;
         parseCommands(commands);
@@ -30,17 +34,11 @@ public class Main {
         Piece[][] answer = (Piece[][]) answers[0];
         Piece first = (Piece) answers[1];
 
-        if (useOld) {
-            BoardUCB board = new BoardUCB(words, answer, first);
-            GUIUCB display = new GUIUCB("Code Names", board);
-            display.display(true);
+        Board board = new Board(words, answer, first);
+        if (startTime == -1) {
+            new Game("Code Names", board);
         } else {
-            Board board = new Board(words, answer, first);
-            if (startTime == -1) {
-                new Game("Code Names", board);
-            } else {
-                new Game("Code Names", board, startTime, turnTime);
-            }
+            new Game("Code Names", board, startTime, turnTime);
         }
     }
 
@@ -49,6 +47,7 @@ public class Main {
         System.exit(0);
     }
 
+    /** Returns random board of word strings. */
     public static String[][] getWords() {
         if (ALL.size() < 25) {
             printErr("Error: Not enough words in files");
@@ -70,6 +69,8 @@ public class Main {
         return words;
     }
 
+    /** Returns the random board answers as the first item in the array and which color
+     *  goes first as the second item. */
     public static Object[] getAnswer() {
         Piece[][] answer = new Piece[5][5];
         Random ran = new Random();
@@ -139,6 +140,7 @@ public class Main {
         return result;
     }
 
+    /** Adds all the words in the specified word set with comma separated text file. */
     public static void addAllWordsComma(String fileName) {
         try {
             FileReader fileReader = new FileReader(commaSeparated + "/" + fileName);
@@ -164,6 +166,7 @@ public class Main {
         }
     }
 
+    /** Adds all the words in the specified word set with line separated text file. */
     public static void addAllWordsLined(String fileName) {
         try {
             FileReader fileReader = new FileReader(lineSeparated + "/" + fileName);
@@ -180,6 +183,10 @@ public class Main {
         }
     }
 
+    /** Splits the arguments into ArrayLists of commands and their arguments.
+     *  Ex. args = {--timing, 120, 100, --pg}
+     *  Returns <<--timing, 120, 100>, <--pg>>
+     */
     public static ArrayList<ArrayList<String>> splitCommands(String[] args) {
         ArrayList<ArrayList<String>> commands = new ArrayList<>();
 
@@ -205,6 +212,7 @@ public class Main {
         return commands;
     }
 
+    /** Uses the ArrayList returned from splitCommands to do every command. */
     public static void parseCommands (ArrayList<ArrayList<String>> commands) {
         ArrayList<String> used = new ArrayList<>();
         if (commands.isEmpty()) {
@@ -236,16 +244,6 @@ public class Main {
                         addAllWordsLined("PGwordsL.txt");
                     } else {
                         printErr("Error: Too many arguments for --pg command");
-                    }
-                    break;
-                case "--old":
-                    if (used.contains("--timing")) {
-                        printErr("Error: Old version does not support timing feature");
-                    }
-                    if (command.size() == 1) {
-                        useOld = true;
-                    } else {
-                        printErr("Error: Too many arguments for --old command");
                     }
                     break;
                 case "--list":

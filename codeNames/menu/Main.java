@@ -1,7 +1,8 @@
 package codeNames.menu;
 
+import codeNames.Board;
+import codeNames.Piece;
 import codeNames.menu.gui.*;
-import codeNames.menu.guiUCB.*;
 
 import java.io.*;
 import java.nio.file.Path;
@@ -9,6 +10,10 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * Runnable class to play game that uses a menu screen for parameters.
+ * @author Austin Cheng
+ */
 public class Main {
     public static final Path commaSeparated = Paths.get("wordSets/commaSeparated");
     public static final Path lineSeparated = Paths.get("wordSets/lineSeparated");
@@ -18,8 +23,8 @@ public class Main {
     public static int turnTime;
     private static Menu menu;
 
+    /** Runs the game. */
     public static void main(String[] args) {
-        useOld = false;
         startTime = -1;
         turnTime = -1;
 
@@ -27,6 +32,7 @@ public class Main {
         menu = new Menu("Code Names");
     }
 
+    /** Starts a new game. */
     public static void newGame() {
         String[][] words = getWords();
 
@@ -34,17 +40,11 @@ public class Main {
         Piece[][] answer = (Piece[][]) answers[0];
         Piece first = (Piece) answers[1];
 
-        if (useOld) {
-            BoardUCB board = new BoardUCB(words, answer, first);
-            GUIUCB display = new GUIUCB("Code Names", board);
-            display.display(true);
+        Board board = new Board(words, answer, first);
+        if (startTime == -1) {
+            new Game("Code Names", board, menu);
         } else {
-            Board board = new Board(words, answer, first);
-            if (startTime == -1) {
-                new Game("Code Names", board, menu);
-            } else {
-                new Game("Code Names", board, startTime, turnTime, menu);
-            }
+            new Game("Code Names", board, startTime, turnTime, menu);
         }
     }
 
@@ -53,6 +53,7 @@ public class Main {
         System.exit(0);
     }
 
+    /** Returns random board of word strings. */
     public static String[][] getWords() {
         if (ALL.size() < 25) {
             printErr("Error: Not enough words in files");
@@ -74,6 +75,8 @@ public class Main {
         return words;
     }
 
+    /** Returns the random board answers as the first item in the array and which color
+     *  goes first as the second item. */
     public static Object[] getAnswer() {
         Piece[][] answer = new Piece[5][5];
         Random ran = new Random();
@@ -143,6 +146,7 @@ public class Main {
         return result;
     }
 
+    /** Adds all the words in the specified word set with comma separated text file. */
     public static void addAllWordsComma(String fileName) {
         try {
             FileReader fileReader = new FileReader(commaSeparated + "/" + fileName);
@@ -168,6 +172,7 @@ public class Main {
         }
     }
 
+    /** Adds all the words in the specified word set with line separated text file. */
     public static void addAllWordsLined(String fileName) {
         try {
             FileReader fileReader = new FileReader(lineSeparated + "/" + fileName);

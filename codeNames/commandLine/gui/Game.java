@@ -1,34 +1,32 @@
 package codeNames.commandLine.gui;
 
-import codeNames.commandLine.Board;
+import codeNames.Board;
+import codeNames.Constants;
+import codeNames.sharedgui.AnswerPanel;
+import codeNames.sharedgui.BoardPanel;
+import codeNames.sharedgui.TimerLabel;
+
+import static codeNames.Constants.*;
 
 import javax.swing.*;
+
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * JFrame representing everything including the board and the timer and bottom buttons.
+ * @author Austin Cheng
+ */
 public class Game extends JFrame {
-    public static final int CARD_WIDTH = 200;
-    public static final int CARD_HEIGHT = 100;
-    public static final int IN_BETWEEN = 50;
-    public static final int FONT_SIZE = 20;
-
-    private static final int BUTTON_WIDTH = 50;
-    private static final int BUTTON_HEIGHT = 25;
-
-    private static final int TIMER_PADDING = 50;
-
-    private static final int WIDTH = CARD_WIDTH * 5 + IN_BETWEEN * 6;
-    private static final int HEIGHT = CARD_HEIGHT * 5 + BUTTON_HEIGHT + IN_BETWEEN * 7;
-
     private Board _model;
 
     /* Game without Timer. */
     public Game(String title, Board model) {
         _model = model;
 
-        setSize(WIDTH, HEIGHT);
+        setSize(Constants.WIDTH, Constants.HEIGHT);
         setTitle(title);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -68,7 +66,7 @@ public class Game extends JFrame {
     public Game(String title, Board model, int startTime, int turnTime) {
         _model = model;
 
-        setSize(WIDTH, HEIGHT);
+        setSize(Constants.WIDTH, Constants.HEIGHT);
         setTitle(title);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

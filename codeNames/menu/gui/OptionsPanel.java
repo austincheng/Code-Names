@@ -11,6 +11,10 @@ import java.util.ArrayList;
 
 import static codeNames.menu.Main.*;
 
+/**
+ * JDialog that pops up after pressing options button on menu.
+ * @author Austin Cheng
+ */
 public class OptionsPanel extends JDialog {
     private static final int TITLE_FONT_INCREASE = 10;
 
@@ -61,18 +65,6 @@ public class OptionsPanel extends JDialog {
         version.setFont(new Font(version.getFont().getName(), Font.BOLD, version.getFont().getSize() + TITLE_FONT_INCREASE));
         add(version, gbc);
 
-        JRadioButton oldV = new JRadioButton("Old");
-        oldV.setActionCommand("Old");
-        add(oldV, gbc);
-        JRadioButton newV = new JRadioButton("New");
-        newV.setActionCommand("New");
-        newV.setSelected(true);
-        add(newV, gbc);
-
-        ButtonGroup versionGroup = new ButtonGroup();
-        versionGroup.add(oldV);
-        versionGroup.add(newV);
-
         JLabel timing = new JLabel("Timing:");
         timing.setFont(new Font(timing.getFont().getName(), Font.BOLD, timing.getFont().getSize() + TITLE_FONT_INCREASE));
         add(timing, gbc);
@@ -106,23 +98,6 @@ public class OptionsPanel extends JDialog {
 
         add(timings, gbc);
 
-        oldV.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                AbstractButton abstractButton = (AbstractButton) e.getSource();
-                ButtonModel buttonModel = abstractButton.getModel();
-
-                if (buttonModel.getActionCommand().equals("Old")) {
-                    if (buttonModel.isSelected()) {
-                        useTimer.setSelected(false);
-                        useTimer.setEnabled(false);
-                    } else {
-                        useTimer.setEnabled(true);
-                    }
-                }
-            }
-        });
-
         useTimer.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
@@ -140,7 +115,7 @@ public class OptionsPanel extends JDialog {
 
 
         JButton save = new JButton("Save Options");
-        save.addActionListener(new SaveOptions(this, commaChecks, lineChecks, versionGroup, useTimer, startField, nextField));
+        save.addActionListener(new SaveOptions(this, commaChecks, lineChecks, useTimer, startField, nextField));
         add(save, gbc);
 
         setVisible(true);
