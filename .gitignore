@@ -1,3 +1,3 @@
 *.txt
 !wordSets/lineSeparated/standardWords.txt
-.gitignore
+*.gitignore
