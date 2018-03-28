@@ -1,0 +1,19 @@
+Possible commands:
+    [--help]
+      Shows this help message (Cannot be used with other commands)
+    [--list]
+      Shows a list word banks (Cannot be used with other commands)
+    [--pg]
+      Uses the default word bank with PG filter, rather than default word bank
+    [--timing [STARTTIME TURNTIME]]
+      STARTTIME: number of seconds of first turn (default is 150)
+      TURNTIME: number of seconds of turns after the first (default is 120)
+      Uses a timer with STARTTIME as first turn time and TURNTIME as subsequent turn times
+    [--words [TEXTFILE]+]
+      TEXTFILE: name of the textfile (must be in the wordSets folder in either commaSeparated or lineSeparated).
+      Files that exist in both commaSeparated and lineSeparated should be the same. If they aren't, this will take the commaSeparated version.
+      Adds list of TEXTFILE to word bank, replacing default word bank
+
+
+
+
