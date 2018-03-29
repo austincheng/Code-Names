@@ -1,14 +1,13 @@
 package codeNames.menu.gui;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.File;
 import java.util.ArrayList;
 
+import static codeNames.Constants.DEFAULT_SET;
 import static codeNames.menu.Main.*;
 
 /**
@@ -40,7 +39,7 @@ public class OptionsPanel extends JDialog {
             String fileName = f.getName();
             allFileNames.add(fileName);
             JCheckBox set = new JCheckBox(fileName);
-            if (fileName.equals("words.txt")) {
+            if (fileName.equals(DEFAULT_SET)) {
                 set.setSelected(true);
             }
             commaChecks.add(set);
@@ -53,7 +52,7 @@ public class OptionsPanel extends JDialog {
             String fileName = f.getName();
             if (!allFileNames.contains(fileName)) {
                 JCheckBox set = new JCheckBox(fileName);
-                if (fileName.equals("words.txt")) {
+                if (fileName.equals(DEFAULT_SET)) {
                     set.setSelected(true);
                 }
                 lineChecks.add(set);

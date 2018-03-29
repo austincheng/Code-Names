@@ -26,4 +26,7 @@ public class Constants {
     public static final int WIDTH = CARD_WIDTH * 5 + IN_BETWEEN * 6;
     /** Height of entire screen. */
     public static final int HEIGHT = CARD_HEIGHT * 5 + BUTTON_HEIGHT + IN_BETWEEN * 7;
+
+    /** File name of default word set. */
+    public static final String DEFAULT_SET = "standardWords.txt";
 }

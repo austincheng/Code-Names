@@ -10,6 +10,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Random;
 
+import static codeNames.Constants.DEFAULT_SET;
+
 /**
  * Runnable class to play game that uses a menu screen for parameters.
  * @author Austin Cheng
@@ -27,7 +29,7 @@ public class Main {
         startTime = -1;
         turnTime = -1;
 
-        addAllWordsLined("words.txt");
+        addAllWordsLined(DEFAULT_SET);
         menu = new Menu("Code Names");
     }
 

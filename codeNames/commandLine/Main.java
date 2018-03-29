@@ -10,6 +10,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Random;
 
+import static codeNames.Constants.DEFAULT_SET;
+
 /**
  * Runnable class to play game that takes command line arguments as parameters.
  * @author Austin Cheng
@@ -216,7 +218,7 @@ public class Main {
     public static void parseCommands (ArrayList<ArrayList<String>> commands) {
         ArrayList<String> used = new ArrayList<>();
         if (commands.isEmpty()) {
-            addAllWordsLined("words.txt");
+            addAllWordsLined(DEFAULT_SET);
         }
         for (int i = 0; i < commands.size(); i++) {
             ArrayList<String> command = commands.get(i);
@@ -230,9 +232,9 @@ public class Main {
                             File comma = new File(commaSeparated + "/" + fileName);
                             File lined = new File(lineSeparated + "/" + fileName);
                             if (comma.exists()) {
-                                addAllWordsComma(command.get(j));
+                                addAllWordsComma(fileName);
                             } else if (lined.exists()) {
-                                addAllWordsLined(command.get(j));
+                                addAllWordsLined(fileName);
                             } else {
                                 printErr("Error: Could not find file " + fileName);
                             }
@@ -241,7 +243,7 @@ public class Main {
                     break;
                 case "--pg":
                     if (command.size() == 1) {
-                        addAllWordsLined("PGwordsL.txt");
+                        addAllWordsLined("PGwords.txt");
                     } else {
                         printErr("Error: Too many arguments for --pg command");
                     }
@@ -322,7 +324,7 @@ public class Main {
             used.add(command.get(0));
         }
         if (ALL.isEmpty()) {
-            addAllWordsLined("words.txt");
+            addAllWordsLined(DEFAULT_SET);
         }
     }
 }
