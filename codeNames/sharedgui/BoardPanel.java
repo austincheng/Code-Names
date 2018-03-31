@@ -10,6 +10,7 @@ import java.awt.Graphics;
 import java.awt.Font;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
 /**
  * JPanel for the board panel inside the Game JFrame with words and reads for mouse clicks.
@@ -33,11 +34,67 @@ public class BoardPanel extends JPanel implements MouseListener {
                 g.setColor(Color.BLACK);
                 g.setFont(new Font(g.getFont().getName(), Font.BOLD, FONT_SIZE));
                 String word = _model.getWord(r, c);
-                g.drawString(word, IN_BETWEEN + CARD_WIDTH / 2 + (CARD_WIDTH + IN_BETWEEN) * c - g.getFontMetrics().stringWidth(word) / 2, IN_BETWEEN + CARD_HEIGHT / 2 + g.getFontMetrics().getAscent() / 2 + (CARD_HEIGHT + IN_BETWEEN) * r);
+                ArrayList<String> subWords = breakUpPhrase(g, word);
+                int times = subWords.size();
+                while (g.getFontMetrics().getAscent() * times > CARD_HEIGHT) {
+                    g.setFont(new Font(g.getFont().getName(), Font.BOLD, g.getFont().getSize() - 1));
+                    subWords = breakUpPhrase(g, word);
+                    times = subWords.size();
+                }
+                int count = 0;
+                for (double i = -((double) times / 2) + 1; i <= ((double) times) / 2; i++) {
+                    int y = IN_BETWEEN + (CARD_HEIGHT + IN_BETWEEN) * r + CARD_HEIGHT / 2
+                            + ((int) (i * g.getFontMetrics().getAscent()));
+                    g.drawString(subWords.get(count), IN_BETWEEN + (CARD_WIDTH + IN_BETWEEN) * c + CARD_WIDTH / 2
+                                    - g.getFontMetrics().stringWidth(subWords.get(count)) / 2, y);
+                    count++;
+                }
             }
         }
     }
 
+    private ArrayList<String> breakUpPhrase(Graphics g, String word) {
+        ArrayList<String> subWords = new ArrayList<>();
+        String[] words = word.split(" ");
+        if (g.getFontMetrics().stringWidth(word) > CARD_WIDTH || words.length > 1) {
+            String subphrase = "";
+            for (int i = 0; i < words.length; i++) {
+                String subWord = words[i];
+                if (g.getFontMetrics().stringWidth(subWord) > CARD_WIDTH) {
+                    ArrayList<String> broken = breakUpLongWord(g, subWord);
+                    for (String brokenWord: broken) {
+                        subWords.add(brokenWord);
+                    }
+                } else {
+                    if (g.getFontMetrics().stringWidth(subphrase + subWord + " ") > CARD_WIDTH) {
+                        subWords.add(subphrase);
+                        subphrase = "";
+                        i--;
+                    } else {
+                        subphrase += subWord + " ";
+                    }
+                }
+            }
+            subWords.add(subphrase);
+        } else {
+            subWords.add(word);
+        }
+        return subWords;
+    }
+
+    private ArrayList<String> breakUpLongWord(Graphics g, String word) {
+        ArrayList<String> subWords = new ArrayList<>();
+        int times = (int) Math.ceil(((double) g.getFontMetrics().stringWidth(word)) / CARD_WIDTH);
+        int subWordLength = (int) Math.ceil(((double) word.length()) / times);
+        for (int i = 1; i <= times; i++) {
+            if (i != times) {
+                subWords.add(word.substring((i - 1) * subWordLength, i * subWordLength) + "-");
+            } else {
+                subWords.add(word.substring((i - 1) * subWordLength, word.length()));
+            }
+        }
+        return subWords;
+    }
 
     @Override
     public void mouseClicked(MouseEvent where) {
