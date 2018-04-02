@@ -60,10 +60,6 @@ public class OptionsPanel extends JDialog {
             }
         }
 
-        JLabel version = new JLabel("Version:");
-        version.setFont(new Font(version.getFont().getName(), Font.BOLD, version.getFont().getSize() + TITLE_FONT_INCREASE));
-        add(version, gbc);
-
         JLabel timing = new JLabel("Timing:");
         timing.setFont(new Font(timing.getFont().getName(), Font.BOLD, timing.getFont().getSize() + TITLE_FONT_INCREASE));
         add(timing, gbc);
