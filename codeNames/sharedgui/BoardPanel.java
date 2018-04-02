@@ -61,6 +61,10 @@ public class BoardPanel extends JPanel implements MouseListener {
             for (int i = 0; i < words.length; i++) {
                 String subWord = words[i];
                 if (g.getFontMetrics().stringWidth(subWord) > CARD_WIDTH) {
+                    if (!subphrase.equals("")) {
+                        subWords.add(subphrase);
+                        subphrase = "";
+                    }
                     ArrayList<String> broken = breakUpLongWord(g, subWord);
                     for (String brokenWord: broken) {
                         subWords.add(brokenWord);
@@ -75,7 +79,9 @@ public class BoardPanel extends JPanel implements MouseListener {
                     }
                 }
             }
-            subWords.add(subphrase);
+            if (!subphrase.equals("")) {
+                subWords.add(subphrase);
+            }
         } else {
             subWords.add(word);
         }
