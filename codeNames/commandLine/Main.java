@@ -81,29 +81,17 @@ public class Main {
 
         answer[assassinRow][assassinCol] = Piece.ASSASSIN;
         for (int i = 0; i < 23; i++) {
+            int row = ran.nextInt(5);
+            int col = ran.nextInt(5);
+            while (answer[row][col] != null) {
+                row = ran.nextInt(5);
+                col = ran.nextInt(5);
+            }
             if (i % 3 == 0) {
-                int row = ran.nextInt(5);
-                int col = ran.nextInt(5);
-                while (answer[row][col] != null) {
-                    row = ran.nextInt(5);
-                    col = ran.nextInt(5);
-                }
                 answer[row][col] = Piece.RED;
             } else if (i % 3 == 1) {
-                int row = ran.nextInt(5);
-                int col = ran.nextInt(5);
-                while (answer[row][col] != null) {
-                    row = ran.nextInt(5);
-                    col = ran.nextInt(5);
-                }
                 answer[row][col] = Piece.BLUE;
             } else {
-                int row = ran.nextInt(5);
-                int col = ran.nextInt(5);
-                while (answer[row][col] != null) {
-                    row = ran.nextInt(5);
-                    col = ran.nextInt(5);
-                }
                 answer[row][col] = Piece.NEUTRAL;
             }
         }
